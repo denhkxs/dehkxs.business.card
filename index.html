@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head> 
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>denhkxs | business card</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        @media (max-width: 768px) {
+            .card {
+                padding: 25px;
+                margin: 20px;
+                width: calc(100% - 40px);
+            }
+
+            h1 {
+                font-size: 22px;
+            }
+
+            p {
+                font-size: 14px;
+            }
+
+            .btn {
+                font-size: 14px;
+                padding: 10px 16px;
+            }
+
+            .photo {
+                width: 80px;
+                height: 80px;
+                margin-bottom: 15px;
+            }
+
+            .links {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="particles" id="particles"></div>
+
+    <div class="card" id="card">
+        <img src="photo.jpg" alt="Фото" class="photo">
+        <h1>denhkxs</h1>
+        <p>
+            Web Developer & Designer<br>
+            Creating modern and interactive web experiences
+        </p>
+        <div class="links">
+            <a href="https://www.instagram.com/denhkxs?igsh=N2NtZm9hc2tmeTZ2&utm_source=qr" class="btn instagram">Instagram</a>
+            <a href="https://t.me/m/TioKpQqNNTEy" class="btn telegram">Telegram</a>
+            <a href="https://github.com/denhkxs" class="btn github">GitHub</a>
+        </div>
+    </div>
+
+    <script>
+        for (let i = 0; i < 150; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.width = `${Math.random() * 5 + 2}px`;
+            particle.style.height = particle.style.width;
+            particle.style.left = `${Math.random() * 100}%`;
+            particle.style.top = `${Math.random() * 100}%`;
+            particle.style.opacity = Math.random() * 0.6 + 0.1;
+            document.getElementById('particles').appendChild(particle);
+        }
+
+        const card = document.getElementById('card');
+        card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            const angleY = (x - centerX) / 20;
+            const angleX = (centerY - y) / 20;
+            card.style.transform = `perspective(1000px) rotateX(${angleX}deg) rotateY(${angleY}deg) scale(1.03)`;
+        });
+
+        card.addEventListener('mouseleave', () => {
+            card.style.transform = 'scale(1)';
+        });
+
+        document.addEventListener('mousemove', (e) => {
+            const particles = document.querySelectorAll('.particle');
+            particles.forEach(particle => {
+                const speed = parseFloat(particle.style.width) / 2;
+                const x = (window.innerWidth - e.pageX * speed) / 100;
+                const y = (window.innerHeight - e.pageY * speed) / 100;
+                particle.style.transform = `translate(${x}px, ${y}px)`;
+            });
+        });
+
+        window.addEventListener('load', () => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            setTimeout(() => {
+                card.style.transition = 'opacity 0.8s, transform 0.8s';
+                card.style.opacity = '1';
+                card.style.transform = 'translateY(0)';
+            }, 100);
+        });
+    </script>
+</body>
+</html>
